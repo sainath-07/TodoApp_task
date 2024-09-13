@@ -1,16 +1,25 @@
+import { Box, Button, Container, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
 const PageNotFound = () => {
   return (
-    <div>
-      <p>
-        404 <span>Page not found</span>
-      </p>
+    <Container
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "50vh",
+      }}
+    >
+      <Box sx={{display:"inline" , fontSize:"50px"}}>
+        404 <Typography sx={{display:"inline" , fontSize:"30px"}}>Page not found</Typography>
+      </Box>
       <Link to={"/"}>
-        <button>back to home</button>
+        <Button variant="contained">back to home</Button>
       </Link>
-    </div>
+    </Container>
   );
 };
 

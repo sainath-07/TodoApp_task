@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import todoStore from './redux/store';
+import { Toaster } from 'react-hot-toast';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +14,10 @@ root.render(
   <Provider store={todoStore}>
 
     <App />
+    <Toaster
+      position="bottom-center"
+      reverseOrder={false}
+    />
   </Provider>
   // </React.StrictMode>
 );

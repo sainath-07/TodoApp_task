@@ -13,12 +13,4 @@ const todoStore = legacy_createStore(
 
 
 
-// // Instead of legacy_createStore, use configureStore:
-// const todoStore = configureStore({
-//   reducer: {
-//     todo: todoReducer,  // Provide your reducer(s) here
-//   },
-//   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
-// });
-
 export default todoStore;

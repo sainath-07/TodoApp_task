@@ -20,8 +20,10 @@ import {
   Typography,
   Box,
   TextField,
+  Checkbox,
 } from "@mui/material";
 import toast from "react-hot-toast";
+import { Scale } from "@mui/icons-material";
 
 const theme = createTheme({
   typography: {
@@ -43,8 +45,8 @@ const Todoapp = () => {
   const [inputText, setInputText] = useState("");
   const [toggle, settoggle] = useState(false);
   const [checkId, setCheckId] = useState("");
-
   const dispatch = useDispatch();
+  const [isChecked, setIsChecked] = useState(false); // State for managing checkbox
 
   useEffect(() => {
     dispatch(todoActioncreater());
@@ -104,169 +106,275 @@ const Todoapp = () => {
     toast.success("Todo Updated successully ");
   };
 
+  // const handleCheckbox = (e) => {
+  //   setCheckId(e.target.value);
+  //   console.log(e.target.value);
+  // };
   return (
     <>
       <ThemeProvider theme={theme}>
-        <AppBar
+        <Typography
           sx={{
-            padding: "5px",
-            height: "12vh",
-            // border: "2px solid green",
-            display: "flex",
-            justifyContent: "flex-end",
+            textAlign: "center",
+            width: "100vw",
+            fontSize: {
+              xs: "30px",
+              md: "40px",
+            },
+            fontFamily: "Poppins, Arial, sans-serif",
+            position: "fixed",
+            top: "0px",
+            right: "0px",
+            zIndex: "5",
+            backgroundColor: "#fff",
+          }}
+        >
+          Todo List
+        </Typography>
+
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { sm: "1fr " }, // Adjust grid for responsive design
+            position: "fixed",
+            top: {
+              xs: "40px",
+              md: "50px",
+            },
+            right: "0px",
+            zIndex: "5",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "16px", // Add gap between elements
+            paddingY: "10px",
             boxShadow:
               "rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px",
             backgroundColor: "rgba(255, 255, 255, 0.7)",
             backdropFilter: "blur(12px)",
+            width: "100vw",
+            // backgroundColor:"white"
           }}
         >
-          <Toolbar
+          <TextField
+            id="outlined-basic"
+            label="Enter todo"
+            variant="outlined"
+            sx={{
+              width: {
+                xs: "100%",
+                sm: "75%",
+                md: "50%",
+              },
+              paddingX: {
+                xs: "10px",
+              },
+              marginTop: { xs: "10px" },
+              margin: "auto",
+              paddingX: "6px",
+            }}
+            value={inputText}
+            onChange={handleinputfield}
+            autoComplete="off"
+          />
+
+          <Box
             sx={{
               display: "flex",
-              justifyContent: "space-around",
-              // border: "2px solid red",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingX: "4px",
+              gap: "16px",
             }}
           >
-            <Typography
-              sx={{
-                color: "white",
-                fontFamily: "Poppins",
-                fontSize: "25px",
-                fontFamily: "cursive",
-                padding: "10px",
-                borderRadius: "6px",
-                backgroundColor: "#222",
-              }}
-            >
-              Todo App
-            </Typography>
-
-            <TextField
-              id="outlined-basic"
-              label="Enter todo"
-              variant="outlined"
-              sx={{ width: "50%" }}
-              value={inputText}
-              onChange={handleinputfield}
-              autoComplete="off"
-            />
-
-            <Box
-              sx={{
-                display: "flex",
-                gap: "4px",
-              }}
-            >
-              {!toggle ? (
-                <>
-                  <Button
-                    variant="contained"
-                    onClick={() => handleAddTodo(inputText)}
-                    sx={{
-                      textTransform: "none",
-                    }}
-                  >
-                    add Todo
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      textTransform: "none",
-                    }}
-                    onClick={handleupdateExistingTodo}
-                  >
-                    update Todo
-                  </Button>
-                </>
-              )}
-
+            {!toggle ? (
               <Button
                 variant="contained"
+                onClick={() => handleAddTodo(inputText)}
                 sx={{
                   textTransform: "none",
+                  width: { xs: "120px", sm: "110px", md: "120px" },
+                  height: "40px",
+                  fontSize: { xs: "14px", sm: "14px", md: "16px" },
                 }}
-                onClick={handleClearTodo}
               >
-                Clear Todo
+                Add Todo
               </Button>
-            </Box>
-          </Toolbar>
-        </AppBar>
+            ) : (
+              <Button
+                variant="contained"
+                onClick={handleupdateExistingTodo}
+                sx={{
+                  textTransform: "none",
+                  width: { xs: "130px", md: "140px" },
+                  height: "40px",
+                  fontSize: { xs: "14px", sm: "14px", md: "16px" },
+                }}
+              >
+                Update Todo
+              </Button>
+            )}
 
-        {error && <Typography>Error: {error}</Typography>}
-
-        <Container sx={{ marginTop: "120px" }}>
-          {loading && (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <Typography sx={{ display: "inline" }}>
-                Please wait Fetching the details
-              </Typography>
-              <SyncLoader color="#13bb31" margin={3} size={20} />
-            </Box>
-          )}
-          {!loading && !error && (
-            <Box
+            <Button
+              variant="contained"
+              onClick={handleClearTodo}
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "16px",
-                padding: "16px",
-                borderRadius: "8px",
-                boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+                textTransform: "none",
+                width: { xs: "120px", sm: "110px", md: "120px" },
+                height: "40px",
+                fontSize: { xs: "14px", sm: "14px", md: "16px" },
               }}
             >
-              {todoList.length > 0 ? (
-                todoList.map((todo) => (
-                  <Box
-                    key={todo.id}
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      padding: "8px",
-                      borderRadius: "6px",
-                      alignContent: "center",
-                      boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-                    }}
-                  >
-                    <Typography
+              Clear Todo
+            </Button>
+          </Box>
+        </Box>
+      </ThemeProvider>
+
+      {error && (
+        <Typography
+          sx={{
+            textAlign: "center",
+            fontSize: {
+              xs: "20px",
+              sm: "25px",
+              lg: "30px",
+            },
+            marginTop: "250px",
+          }}
+        >
+          Error: {error}
+        </Typography>
+      )}
+
+      {loading && (
+        <Typography
+          sx={{
+            textAlign: "center",
+            fontSize: {
+              xs: "20px",
+              sm: "25px",
+              lg: "30px",
+            },
+            marginTop: "250px",
+          }}
+        >
+          Please wait Fetching the details{" "}
+          <SyncLoader color="#13bb31" margin={3} size={20} />
+        </Typography>
+      )}
+
+      {!loading && !error && (
+        <Box
+          sx={{
+            display: "grid",
+            gap: "30px",
+            // border: "2px solid blue",
+            marginTop: "220px",
+            padding: "5px",
+          }}
+        >
+          <Box
+            sx={{
+              // border: "2px solid black",
+              display: "flex",
+             
+              flexDirection:"column-reverse",
+              gap: "20px",
+              width: {
+                sm: "95%",
+                md: "70%",
+              },
+              // translate:Scale,
+              margin: "auto",
+              backgroundColor: "rgba(255, 255, 255, 0.7)",
+              backdropFilter: "blur(12px)",
+            }}
+          >
+            {todoList.length > 0 ? (
+              todoList.map((todo) => {
+                return (
+                  <React.Fragment key={todo.id}>
+                    <Box
                       sx={{
-                        width: "80%",
+                        borderRadius: "12px",
+                        padding: "8px",
+                        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                        transition: "all 0.4s ease-in-out ", 
+                        ":hover": {
+                          transform: "scale(1.02)",
+                        },
+                        cursor:"pointer"
                       }}
                     >
-                      {todo.todo}
-                    </Typography>
-                    <Box>
-                      <Button
-                        variant="contained"
-                        color="success"
-                        sx={{ marginRight: "8px", textTransform: "none" }}
-                        onClick={() => handletodoupdate(todo.todo, todo.id)}
-                      >
-                        Update
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        onClick={() => handleDeleteTodo(todo.id)}
+                      {/* <Checkbox
                         sx={{
-                          textTransform: "none",
+                          display: "inline",
+                        }}
+                        onClick={handleCheckbox}
+                      /> */}
+                      <Typography
+                        sx={{
+                          fontSize: {
+                            xs: "20px",
+                          },
+                          display: "inline",
+                          width: "75%",
                         }}
                       >
-                        Delete
-                      </Button>
+                        {todo.todo}
+                      </Typography>
+
+                      <Box
+                        sx={{
+                          // border:"2px solid red",
+                          paddingLeft: "8px",
+                          marginTop: "40px",
+                        }}
+                      >
+                        <Button
+                          variant="contained"
+                          color="success"
+                          sx={{
+                            marginRight: "8px",
+                            textTransform: "none",
+                            width: {
+                              xs: "40%",
+                              md: "30%",
+                              sm: "25%",
+                              lg: "15%",
+                            },
+                          }}
+                          onClick={() => handletodoupdate(todo.todo, todo.id)}
+                        >
+                          Update
+                        </Button>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          onClick={() => handleDeleteTodo(todo.id)}
+                          sx={{
+                            width: {
+                              xs: "40%",
+                              md: "30%",
+                              sm: "25%",
+                              lg: "15%",
+                            },
+                            textTransform: "none",
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </Box>
                     </Box>
-                  </Box>
-                ))
-              ) : (
-                <Typography>No todos available</Typography>
-              )}
-            </Box>
-          )}
-        </Container>
-      </ThemeProvider>
+                  </React.Fragment>
+                );
+              })
+            ) : (
+              <Typography>No todos available</Typography>
+            )}
+          </Box>
+        </Box>
+      )}
     </>
   );
 };

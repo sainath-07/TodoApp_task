@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { SyncLoader } from "react-spinners";
 import Swal from "sweetalert2";
 import "animate.css";
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import CheckTwoToneIcon from '@mui/icons-material/CheckTwoTone';
+import PlaylistAddTwoToneIcon from '@mui/icons-material/PlaylistAddTwoTone';
 import todoActioncreater, {
   addTodo,
   clearTodo,
@@ -23,7 +26,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import toast from "react-hot-toast";
-import { Scale } from "@mui/icons-material";
+import { Scale, Update } from "@mui/icons-material";
 
 const theme = createTheme({
   typography: {
@@ -192,12 +195,12 @@ const Todoapp = () => {
                 onClick={() => handleAddTodo(inputText)}
                 sx={{
                   textTransform: "none",
-                  width: { xs: "120px", sm: "110px", md: "120px" },
+                  width: { xs: "160px", sm: "140px", md: "180px" },
                   height: "40px",
                   fontSize: { xs: "14px", sm: "14px", md: "16px" },
                 }}
               >
-                Add Todo
+                Add Todo <PlaylistAddTwoToneIcon/>
               </Button>
             ) : (
               <Button
@@ -205,12 +208,12 @@ const Todoapp = () => {
                 onClick={handleupdateExistingTodo}
                 sx={{
                   textTransform: "none",
-                  width: { xs: "130px", md: "140px" },
+                  width: { xs: "130px", md: "180px" },
                   height: "40px",
                   fontSize: { xs: "14px", sm: "14px", md: "16px" },
                 }}
               >
-                Update Todo
+                Update Todo  <CheckTwoToneIcon/>
               </Button>
             )}
 
@@ -338,15 +341,15 @@ const Todoapp = () => {
                             marginRight: "8px",
                             textTransform: "none",
                             width: {
-                              xs: "40%",
-                              md: "30%",
+                              xs: "30%",
+                              md: "20%",
                               sm: "25%",
                               lg: "15%",
                             },
                           }}
                           onClick={() => handletodoupdate(todo.todo, todo.id)}
                         >
-                          Update
+                          Update <EditIcon/>
                         </Button>
                         <Button
                           variant="contained"
@@ -354,8 +357,8 @@ const Todoapp = () => {
                           onClick={() => handleDeleteTodo(todo.id)}
                           sx={{
                             width: {
-                              xs: "40%",
-                              md: "30%",
+                              xs: "30%",
+                              md: "20%",
                               sm: "25%",
                               lg: "15%",
                             },
@@ -363,6 +366,7 @@ const Todoapp = () => {
                           }}
                         >
                           Delete
+                          <DeleteIcon/>
                         </Button>
                       </Box>
                     </Box>
